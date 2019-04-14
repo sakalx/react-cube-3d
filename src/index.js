@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import './style.css';
 
@@ -7,8 +7,8 @@ function Cube({
                 cubeSize = '300px',
                 viewportSize = '350px',
               }) {
+  const viewportEl = useRef(null);
   let isUpperSideDown = false;
-  const bodyStyle = document.body.style;
 
   const x = {
     current: 0,
@@ -23,19 +23,22 @@ function Cube({
 
   useEffect(() => {
     const cubeSizeSplitted = cubeSize.split(/(\d+)/);
-    const translateZ = (cubeSizeSplitted[1] / 2)+ cubeSizeSplitted[2];
+    const translateZ = (cubeSizeSplitted[1] / 2) + cubeSizeSplitted[2];
+    const viewport = viewportEl.current.style;
 
-    bodyStyle.setProperty('--cube-size', cubeSize);
-    bodyStyle.setProperty('--viewport-size', viewportSize);
-    bodyStyle.setProperty('--translateZ', translateZ);
+    viewport.setProperty('--cube-size', cubeSize);
+    viewport.setProperty('--viewport-size', viewportSize);
+    viewport.setProperty('--translateZ', translateZ);
   }, []);
 
   const rotate = (x, y) => {
-    bodyStyle.setProperty('--x', x + 'deg');
-    bodyStyle.setProperty('--y', y + 'deg');
+    const viewport = viewportEl.current.style;
+    viewport.setProperty('--x', x + 'deg');
+    viewport.setProperty('--y', y + 'deg');
   };
 
   const handleStartMoving = e => {
+    e.preventDefault();
     x.startPosition = e.clientX;
     y.startPosition = e.clientY;
   };
@@ -51,7 +54,7 @@ function Cube({
   };
 
   const handleMove = e => {
-    if (x.startPosition) {
+    if (x.startPosition || y.startPosition) {
       const distanceX = e.clientX - x.startPosition;
       const distanceY = e.clientY - y.startPosition;
 
@@ -60,32 +63,34 @@ function Cube({
           : x.prevPosition + distanceX;
       const nextY = y.prevPosition - distanceY;
 
-      const isXChanged = nextX > x.current + 20 || nextX < x.current - 20;
-      const isYChanged = nextY > y.current + 20 || nextY < y.current - 20;
+      //const isXChanged = nextX > x.current + 10 || nextX < x.current - 10;
+      //const isYChanged = nextY > y.current + 10 || nextY < y.current - 10;
 
-      if (isXChanged || isYChanged) {
-        x.current = nextX;
-        y.current = nextY;
-        rotate(nextX, nextY);
-      }
+      //if (isXChanged || isYChanged) {
+      x.current = nextX;
+      y.current = nextY;
+      rotate(nextX, nextY);
+      //}
     }
   };
 
   return (
       <div
-          id='cube-viewport'
+          id='-cube-viewport'
           onMouseDown={handleStartMoving}
           onMouseMove={handleMove}
           onMouseUp={handleStopMoving}
           onMouseOut={handleStopMoving}
           onTouchStart={e => handleStartMoving(e.changedTouches[0])}
           onTouchMove={e => handleMove(e.changedTouches[0])}
-          onTouchEnd={handleStopMoving}>
-        <div id='cube-axis'>
+          onTouchEnd={handleStopMoving}
+          ref={viewportEl}
+      >
+        <div id='-cube-axis'>
           {children.map((component, i) =>
               <div
-                  className='cube-side'
-                  id={`cube-side-${i}`}
+                  className='-cube-side'
+                  id={`-cube-side-${i}`}
                   key={String(i)}
               >
                 {component}
