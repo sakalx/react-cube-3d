@@ -1,1 +1,2 @@
-#  React cube-3d UI component
+#  React cube3d UI component
+#  *In progress*
