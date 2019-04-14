@@ -39,7 +39,6 @@ function Cube({
   };
 
   const handleStartMoving = e => {
-    e.preventDefault();
     x.startPosition = e.clientX;
     y.startPosition = e.clientY;
   };
