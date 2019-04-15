@@ -7,7 +7,7 @@ ____________________________________________________
  
 ## Install
 ```
-npm install --save react-3d-cube
+npm install --save react-cube3d-component
 ```
 
 ____________________________________________________
@@ -26,7 +26,7 @@ function App() {
           <div>Back</div>
           <div>Right</div>
           <div>Left</div>
-          <div>TOP</div>
+          <div>Top</div>
           <div>Bottom</div>
         </Cube>
   );
