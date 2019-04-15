@@ -2,6 +2,18 @@ import React, {useEffect, useRef} from 'react';
 
 import './style.css';
 
+let isUpperSideDown = false;
+const x = {
+  current: 0,
+  prevPosition: 10,
+  startPosition: 0,
+};
+const y = {
+  current: 0,
+  prevPosition: 0,
+  startPosition: 0,
+};
+
 function Cube({
                 children,
                 cubeSize = '300px',
@@ -9,18 +21,7 @@ function Cube({
                 ...rest
               }) {
   const viewportEl = useRef(null);
-  let isUpperSideDown = false;
 
-  const x = {
-    current: 0,
-    prevPosition: 0,
-    startPosition: 0,
-  };
-  const y = {
-    current: 0,
-    prevPosition: 0,
-    startPosition: 0,
-  };
 
   useEffect(() => {
     const viewport = viewportEl.current.style;
@@ -44,7 +45,7 @@ function Cube({
   };
 
   const handleStopMoving = () => {
-    if (x.startPosition) {
+    if (x.startPosition || y.startPosition) {
       const normalizeY = Math.abs(y.current % 360);
       isUpperSideDown = normalizeY >= 90 && normalizeY <= 270;
       x.startPosition = y.startPosition = 0;
@@ -63,8 +64,8 @@ function Cube({
           : x.prevPosition + distanceX;
       const nextY = y.prevPosition - distanceY;
 
-      const isXChanged = nextX > x.current + 10 || nextX < x.current - 10;
-      const isYChanged = nextY > y.current + 10 || nextY < y.current - 10;
+      const isXChanged = nextX > x.current + 15 || nextX < x.current - 15;
+      const isYChanged = nextY > y.current + 15 || nextY < y.current - 15;
 
       if (isXChanged || isYChanged) {
         x.current = nextX;
