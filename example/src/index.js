@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {render} from 'react-dom';
-import Cube from '../../src';
+import Cube from '../../dist';
 
 import './style.css';
 
