@@ -1,20 +1,28 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const htmlWebpackPlugin = new HtmlWebpackPlugin({
+const htmlWebpack = new HtmlWebpackPlugin({
   template: path.join(__dirname, 'example/src/index.html'),
   filename: './index.html',
 });
 
-module.exports = {
-  devtool: 'cheap-source-map',
+const progressWebpack = new webpack.ProgressPlugin();
 
-  entry: path.join(__dirname, 'example/src/index.js'),
+module.exports = (env, argv) => {
+  const isProd = argv.mode === 'production';
 
-  output: {
-    path: path.join(__dirname, 'example/dist'),
-    filename: 'bundle.js',
-  },
+  const sourceMap = isProd ? 'nosources-source-map' : 'eval-source-map';
+
+  return ({
+    devtool: sourceMap,
+
+    entry: path.join(__dirname, 'example/src/index.js'),
+
+    output: {
+      path: path.join(__dirname, 'example/dist'),
+      filename: 'bundle.js',
+    },
 
   module: {
     rules: [
@@ -30,15 +38,19 @@ module.exports = {
     ],
   },
 
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
+    resolve: {
+      extensions: ['.js', '.jsx'],
+    },
 
-  devServer: {
-    port: 8000,
-    open: true,
-    inline: true,
-  },
+    devServer: {
+      port: 3000,
+      open: true,
+      inline: true,
+    },
 
-  plugins: [htmlWebpackPlugin],
+    plugins: [
+      progressWebpack,
+      htmlWebpack,
+    ],
+  });
 };
