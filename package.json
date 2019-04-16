@@ -1,8 +1,13 @@
 {
   "name": "react-cube3d-component",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React cube-3d UI component",
   "main": "dist/",
+  "browserslist": [
+    "> 1%",
+    "ie >= 11",
+    "not op_mini all"
+  ],
   "babel": {
     "presets": [
       [
@@ -25,13 +30,15 @@
     ]
   },
   "scripts": {
+    "clean": "rimraf dist",
     "start": "webpack-dev-server --mode development",
-    "transpile": "babel src -d dist --copy-files",
-    "build": "webpack --mode production",
+    "build-package": "npm run clean && npm run css-prefix && npm run transpile",
+    "build-example": "webpack --mode production",
     "deploy": "gh-pages -d example/dist",
-    "publish-demo": "npm run build && npm run deploy",
-    "prepublishOnly": "npm run transpile",
-    "publish": "npm publish"
+    "publish-npm": "npm run build-package && npm publish",
+    "publish-git": "npm run build-package && npm run build-example && npm run deploy",
+    "css-prefix": "postcss src/style.css --use=postcss-preset-env --no-map --output=dist/style.css",
+    "transpile": "babel src/**/*.js -d dist --copy-files"
   },
   "repository": {
     "type": "git",
@@ -65,8 +72,11 @@
     "@babel/runtime": "^7.0.0",
     "babel-loader": "^8.0.0",
     "css-loader": "^2.1.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "gh-pages": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "postcss-cli": "^6.1.2",
+    "postcss-preset-env": "^6.6.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "style-loader": "^0.23.0",
