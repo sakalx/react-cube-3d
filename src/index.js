@@ -79,13 +79,13 @@ function Cube({
       <div {...rest}>
         <div
             id='-cube-viewport'
-            onMouseDown={handleStartMoving}
-            onMouseMove={handleMove}
-            onMouseUp={handleStopMoving}
-            onMouseOut={handleStopMoving}
-            onTouchStart={e => handleStartMoving(e.changedTouches[0])}
-            onTouchMove={e => handleMove(e.changedTouches[0])}
-            onTouchEnd={handleStopMoving}
+            onMouseDownCapture={handleStartMoving}
+            onMouseMoveCapture={handleMove}
+            onMouseUpCapture={handleStopMoving}
+            onMouseOutCapture={handleStopMoving}
+            onTouchStartCapture={e => handleStartMoving(e.changedTouches[0])}
+            onTouchMoveCapture={e => handleMove(e.changedTouches[0])}
+            onTouchEndCapture={handleStopMoving}
             ref={viewportEl}
         >
           <div id='-cube-axis'>
