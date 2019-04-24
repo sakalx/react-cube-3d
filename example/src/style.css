@@ -4,6 +4,7 @@ body {
 
 h1 {
     color: #eff2f7;
+    pointer-events: none;
 }
 
 span {
