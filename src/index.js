@@ -40,7 +40,7 @@ function Cube({
       const currentTranslateZ = computedStyle.getPropertyValue('--translateZ');
       const toNumberTranslateZ = parseInt(currentTranslateZ);
 
-      translateZ = -(toNumberTranslateZ + (toNumberTranslateZ * 0.25)) + 'px';
+      translateZ = -(toNumberTranslateZ + (toNumberTranslateZ * 0.25)) + cubeSizeSplitted[2];
     }
 
     viewport.style.setProperty('--translateZ', translateZ);

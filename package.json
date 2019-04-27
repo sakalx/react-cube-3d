@@ -1,6 +1,6 @@
 {
   "name": "react-cube3d-component",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "React cube-3d UI component",
   "main": "dist/",
   "browserslist": [

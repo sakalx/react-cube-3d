@@ -19,7 +19,7 @@
 .-cube-side {
     height: 100%;
     position: absolute;
-    transition: transform .7s cubic-bezier(.25,.75,.5,1.25);
+    transition: transform .5s cubic-bezier(.25,.75,.5,1.25);
     width: 100%;
 }
 
