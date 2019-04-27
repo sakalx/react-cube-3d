@@ -7,10 +7,25 @@ h1 {
     pointer-events: none;
 }
 
+
 span {
     color: #8b1a1a;
     font-size: 21px;
     font-weight: bold;
+}
+
+button {
+    background: rgba(0, 0, 0, .2);
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 8px;
+    outline: none;
+    padding: 2px;
+    text-shadow: -1px -1px 1px rgba(255, 255, 255, .1), 1px 1px 1px rgba(0, 0, 0, .5);
+    width: 250px;
+    transform: rotate(15deg);
 }
 
 main {
@@ -29,6 +44,13 @@ section {
     height: 100%;
     justify-content: center;
     user-select: none;
+}
+
+header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .cube-viewport {

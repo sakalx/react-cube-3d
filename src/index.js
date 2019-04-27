@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useLayoutEffect, useRef} from 'react';
 
 import './style.css';
 
@@ -17,21 +17,34 @@ const y = {
 function Cube({
                 children,
                 cubeSize = '300px',
+                reveal = false,
                 viewportSize = '350px',
                 ...rest
               }) {
   const viewportEl = useRef(null);
 
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const viewport = viewportEl.current.style;
-    const cubeSizeSplitted = cubeSize.split(/(\d+)/);
-    const translateZ = (cubeSizeSplitted[1] / 2) + cubeSizeSplitted[2];
 
     viewport.setProperty('--cube-size', cubeSize);
     viewport.setProperty('--viewport-size', viewportSize);
-    viewport.setProperty('--translateZ', translateZ);
   }, []);
+
+  useLayoutEffect(() => {
+    const viewport = viewportEl.current;
+    const cubeSizeSplitted = cubeSize.split(/(\d+)/);
+    let translateZ = (cubeSizeSplitted[1] / 2) + cubeSizeSplitted[2];
+
+    if (reveal) {
+      const computedStyle = getComputedStyle(viewport);
+      const currentTranslateZ = computedStyle.getPropertyValue('--translateZ');
+      const toNumberTranslateZ = parseInt(currentTranslateZ);
+
+      translateZ = -(toNumberTranslateZ + (toNumberTranslateZ * 0.25)) + 'px';
+    }
+
+    viewport.style.setProperty('--translateZ', translateZ);
+  }, [reveal]);
 
   const rotate = (x, y) => {
     const viewport = viewportEl.current.style;

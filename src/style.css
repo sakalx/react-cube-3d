@@ -12,12 +12,14 @@
     transform-style: preserve-3d;
     transform: rotateX(var(--y, -25deg)) rotateY(var(--x, -15deg));
     transition: transform .7s ease-out;
+    /*transition: transform .7s cubic-bezier(.22,.68,0,1.71);*/
     width: var(--cube-size);
 }
 
 .-cube-side {
     height: 100%;
     position: absolute;
+    transition: transform .7s cubic-bezier(.25,.75,.5,1.25);
     width: 100%;
 }
 

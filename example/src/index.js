@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {render} from 'react-dom';
-import Cube from '../../dist';
+import Cube from '../../src';
 
 import './style.css';
 
 function App() {
   const bodyStyle = document.body.style;
   const [selected, setSelected] = useState('');
+  const [reveal, setReveal] = useState(false);
 
   const handleMouseDown = () => {
     bodyStyle.setProperty('--cursor', 'grabbing');
@@ -20,16 +21,24 @@ function App() {
     setSelected(target.textContent);
   };
 
+  const handleToggleReveal = () => {
+    setReveal(reveal => !reveal);
+  };
+
   return (
       <main>
-        <h2>Selected: {selected}</h2>
+        <header>
+          <h2>Selected: {selected}</h2>
+          <button onClick={handleToggleReveal}>REVEAL CUBE</button>
+        </header>
         <span>Viewport size: 500px</span>
         <Cube
+            className='cube-viewport'
             cubeSize='300px'
-            viewportSize='500px'
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
-            className='cube-viewport'
+            reveal={reveal}
+            viewportSize='500px'
         >
           <section onClick={handleClick} style={{background: '#b1e6f0'}}>
             <h1>Front</h1>
